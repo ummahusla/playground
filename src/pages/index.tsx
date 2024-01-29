@@ -1,118 +1,204 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import React, { Suspense, lazy } from 'react';
 
-const inter = Inter({ subsets: ["latin"] });
+const StoriesLazy = lazy(() => import('react-insta-stories'));
+const WithSeeMore = lazy(() =>
+  import('react-insta-stories').then((module) => ({
+    default: module.WithSeeMore,
+  }))
+);
 
-export default function Home() {
+function Home() {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: 20,
+      }}
     >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+      <Suspense>
+        <StoriesLazy
+          preloadCount={3}
+          loop
+          keyboardNavigation
+          defaultInterval={8000}
+          stories={stories2}
+          onStoryEnd={(s, st) => console.log('story ended', s, st)}
+          onAllStoriesEnd={(s, st) => console.log('all stories ended', s, st)}
+          onStoryStart={(s, st) => console.log('story started', s, st)}
+          onNext={() => console.log('next button pressed')}
+          onPrevious={() => console.log('previous button pressed')}
+          storyContainerStyles={{ borderRadius: 8, overflow: 'hidden' }}
         />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      </Suspense>
+    </div>
   );
 }
+
+const Story2 = ({ action, isPaused }) => {
+  return (
+    <div
+      style={{
+        width: '100%',
+        padding: 20,
+        height: '100%',
+        background: 'Aquamarine',
+        color: '#333',
+      }}
+    >
+      <h1>You get the control of the story.</h1>
+      <p>
+        Render your custom JSX by passing just a{' '}
+        <code style={{ fontStyle: 'italic' }}>content</code> property inside
+        your story object.
+      </p>
+      <p>
+        You get a <code style={{ fontStyle: 'italic' }}>action</code> prop as an
+        input to your content function, that can be used to play or pause the
+        story.
+      </p>
+      <h1>{isPaused ? 'Paused' : 'Playing'}</h1>
+      <h4>v2 is out 🎉</h4>
+      <p>React Native version coming soon.</p>
+    </div>
+  );
+};
+
+const stories2 = [
+  {
+    content: ({ action, isPaused }) => {
+      return (
+        <div
+          style={{
+            background: '#333',
+            width: '100%',
+            padding: 20,
+            color: 'white',
+            height: '100%',
+          }}
+        >
+          <h1>The new version is here.</h1>
+          <p>This is the new story.</p>
+          <p>Now render React components right into your stories.</p>
+          <p>Possibilities are endless, like here - here's a code block!</p>
+          <pre>
+            <code
+              style={{
+                background: '#eee',
+                padding: '5px 10px',
+                borderRadius: '4px',
+                color: '#333',
+              }}
+            >
+              console.log('Hello, world!')
+            </code>
+          </pre>
+          <p>Or here, an image!</p>
+          <br />
+          <img
+            style={{
+              display: 'block',
+              maxWidth: '100%',
+              borderRadius: 4,
+            }}
+            src="https://images.unsplash.com/photo-1565506737357-af89222625ad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
+          ></img>
+          <h3>Perfect. But there's more! →</h3>
+        </div>
+      );
+    },
+  },
+  {
+    content: ({ action, story }) => {
+      return (
+        <Suspense>
+          <WithSeeMore story={story} action={action}>
+            <div style={{ background: 'snow', padding: 20, height: '100%' }}>
+              <h1 style={{ marginTop: '100%', marginBottom: 0 }}>🌝</h1>
+              <h1 style={{ marginTop: 5 }}>
+                We have our good old image and video stories, just the same.
+              </h1>
+            </div>
+          </WithSeeMore>
+        </Suspense>
+      );
+    },
+    seeMoreCollapsed: ({ toggleMore, action }) => (
+      <p
+        style={{
+          textAlign: 'center',
+          fontSize: 14,
+          bottom: 20,
+          position: 'relative',
+        }}
+        onClick={() => toggleMore(true)}
+      >
+        A custom See More message →
+      </p>
+    ),
+    seeMore: ({ close }) => (
+      <div
+        style={{
+          maxWidth: '100%',
+          height: '100%',
+          padding: 40,
+          background: 'white',
+        }}
+      >
+        <h2>Just checking the see more feature.</h2>
+        <p style={{ textDecoration: 'underline' }} onClick={close}>
+          Go on, close this popup.
+        </p>
+      </div>
+    ),
+    duration: 5000,
+  },
+  {
+    url: 'https://picsum.photos/1080/1920',
+    seeMore: ({ close }) => (
+      <div
+        style={{
+          maxWidth: '100%',
+          height: '100%',
+          padding: 40,
+          background: 'white',
+        }}
+      >
+        <h2>Just checking the see more feature.</h2>
+        <p style={{ textDecoration: 'underline' }} onClick={close}>
+          Go on, close this popup.
+        </p>
+      </div>
+    ),
+  },
+  {
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    type: 'video',
+  },
+  {
+    content: Story2,
+  },
+  {
+    url: 'https://plus.unsplash.com/premium_photo-1676231417481-5eae894e7f68?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1742&q=80',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1676321626679-2513969695d3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1676359912443-1bf438548584?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1676316698468-a907099ad5bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80',
+    preloadResource: false,
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1676310483825-daa08914445e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2920&q=80',
+    preloadResource: false,
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1676321685222-0b527e61d5c7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+    preloadResource: false,
+  },
+];
+
+export default Home;
