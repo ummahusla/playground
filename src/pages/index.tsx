@@ -23,9 +23,13 @@ function Home() {
           keyboardNavigation
           defaultInterval={8000}
           stories={stories2}
-          onStoryEnd={(s, st) => console.log('story ended', s, st)}
-          onAllStoriesEnd={(s, st) => console.log('all stories ended', s, st)}
-          onStoryStart={(s, st) => console.log('story started', s, st)}
+          onStoryEnd={(s: any, st: any) => console.log('story ended', s, st)}
+          onAllStoriesEnd={(s: any, st: any) =>
+            console.log('all stories ended', s, st)
+          }
+          onStoryStart={(s: any, st: any) =>
+            console.log('story started', s, st)
+          }
           onNext={() => console.log('next button pressed')}
           onPrevious={() => console.log('previous button pressed')}
           storyContainerStyles={{ borderRadius: 8, overflow: 'hidden' }}
@@ -35,7 +39,7 @@ function Home() {
   );
 }
 
-const Story2 = ({ action, isPaused }) => {
+const Story2 = ({ action, isPaused }: any) => {
   return (
     <div
       style={{
@@ -66,7 +70,7 @@ const Story2 = ({ action, isPaused }) => {
 
 const stories2 = [
   {
-    content: ({ action, isPaused }) => {
+    content: ({ action, isPaused }: any) => {
       return (
         <div
           style={{
@@ -80,7 +84,9 @@ const stories2 = [
           <h1>The new version is here.</h1>
           <p>This is the new story.</p>
           <p>Now render React components right into your stories.</p>
-          <p>Possibilities are endless, like here - here's a code block!</p>
+          <p>
+            Possibilities are endless, like here - here&apos;s a code block!
+          </p>
           <pre>
             <code
               style={{
@@ -90,7 +96,7 @@ const stories2 = [
                 color: '#333',
               }}
             >
-              console.log('Hello, world!')
+              console.log(&apos;Hello, world!&apos;)
             </code>
           </pre>
           <p>Or here, an image!</p>
@@ -103,13 +109,13 @@ const stories2 = [
             }}
             src="https://images.unsplash.com/photo-1565506737357-af89222625ad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
           ></img>
-          <h3>Perfect. But there's more! →</h3>
+          <h3>{"Perfect. But there's more! →"}</h3>
         </div>
       );
     },
   },
   {
-    content: ({ action, story }) => {
+    content: ({ action, story }: any) => {
       return (
         <Suspense>
           <WithSeeMore story={story} action={action}>
@@ -123,7 +129,7 @@ const stories2 = [
         </Suspense>
       );
     },
-    seeMoreCollapsed: ({ toggleMore, action }) => (
+    seeMoreCollapsed: ({ toggleMore, action }: any) => (
       <p
         style={{
           textAlign: 'center',
@@ -136,7 +142,7 @@ const stories2 = [
         A custom See More message →
       </p>
     ),
-    seeMore: ({ close }) => (
+    seeMore: ({ close }: any) => (
       <div
         style={{
           maxWidth: '100%',
@@ -155,7 +161,7 @@ const stories2 = [
   },
   {
     url: 'https://picsum.photos/1080/1920',
-    seeMore: ({ close }) => (
+    seeMore: ({ close }: any) => (
       <div
         style={{
           maxWidth: '100%',
