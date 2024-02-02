@@ -70,7 +70,7 @@ const Stories = ({
     {
       type: 'video',
       content: '/assets/6.mov',
-      duration: 3000,
+      duration: 5000,
     },
     {
       type: 'image',
@@ -138,39 +138,23 @@ const Stories = ({
       />
       <button
         onClick={goToPrevStory}
+        className="w-[42px] cursor-pointer absolute bg-transparent h-full top-0 left-0 transition-opacity duration-500 ease-in-out"
         style={{
-          cursor: 'pointer',
-          position: 'absolute',
-          backgroundColor: '#bebebe',
-          height: '100%',
-          top: '0',
-          left: '0',
           pointerEvents: currentStoryIndex === 0 ? 'none' : 'auto',
           opacity: currentStoryIndex === 0 ? 0.5 : 1,
-          transition: 'opacity 0.5s ease-in-out',
         }}
         disabled={isTransitioning}
-      >
-        Prev
-      </button>
+      />
       <button
         onClick={goToNextStory}
+        className="w-[42px] cursor-pointer absolute bg-transparent h-full top-0 right-0 transition-opacity duration-500 ease-in-out"
         style={{
-          cursor: 'pointer',
-          position: 'absolute',
-          backgroundColor: '#bebebe',
-          height: '100%',
-          top: '0',
-          right: '0',
           pointerEvents:
             currentStoryIndex === stories.length - 1 ? 'none' : 'auto',
           opacity: currentStoryIndex === stories.length - 1 ? 0.5 : 1,
-          transition: 'opacity 0.5s ease-in-out',
         }}
         disabled={isTransitioning}
-      >
-        Next
-      </button>
+      />
     </div>
   );
 };

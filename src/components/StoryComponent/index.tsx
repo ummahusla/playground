@@ -24,7 +24,6 @@ const StoryComponent: React.FC<StoryProps> = ({
 
   const style = {
     borderRadius: '8px',
-    border: '1px solid #E0E0E0',
     width,
     height,
     opacity: isTransitioning ? 0 : 1,
@@ -50,7 +49,6 @@ const StoryComponent: React.FC<StoryProps> = ({
       {type === 'video' && (
         <video autoPlay style={{ ...style, width: '100%', height: '100%' }}>
           <source src={content as string} type="video/mp4" />
-          Your browser does not support the video tag.
         </video>
       )}
       {type === 'component' && <div style={style}>{content}</div>}
