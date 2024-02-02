@@ -29,20 +29,6 @@ const Stories = ({
     setTimeout(() => {
       setCurrentStoryIndex(0);
       setIsTransitioning(false);
-
-      // Start a new interval after a short delay
-      setTimeout(() => {
-        intervalRef.current = setInterval(() => {
-          setIsTransitioning(true);
-
-          setTimeout(() => {
-            setCurrentStoryIndex(
-              (prevIndex) => (prevIndex + 1) % stories.length
-            );
-            setIsTransitioning(false);
-          }, animationDuration);
-        }, stories[currentStoryIndex]?.duration || transitionDuration);
-      }, animationDuration);
     }, animationDuration);
   };
 
@@ -108,25 +94,36 @@ const Stories = ({
     }, animationDuration);
   };
 
+  // Handling the transition between stories based on the interval.
+  // It starts a new interval when the component mounts and clears it
+  // when the component unmounts or the currentStoryIndex changes.
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
+
+    const startTransition = () => {
+      setIsTransitioning(true);
+
+      setTimeout(() => {
+        setCurrentStoryIndex((prevIndex) => (prevIndex + 1) % stories.length);
+        setIsTransitioning(false);
+      }, animationDuration);
+    };
 
     if (currentStoryIndex < stories.length - 1) {
       const duration =
         stories[currentStoryIndex].duration || transitionDuration;
 
-      interval = setInterval(() => {
-        setIsTransitioning(true);
-
-        setTimeout(() => {
-          setCurrentStoryIndex((prevIndex) => (prevIndex + 1) % stories.length);
-          setIsTransitioning(false);
-        }, animationDuration);
-      }, duration);
+      interval = setInterval(startTransition, duration);
     }
 
     return () => clearInterval(interval);
-  }, [currentStoryIndex, stories, animationDuration]);
+  }, [
+    currentStoryIndex,
+    stories,
+    animationDuration,
+    transitionDuration,
+    setIsTransitioning,
+  ]);
 
   return (
     <div className="w-[390px] h-[844px] relative">
