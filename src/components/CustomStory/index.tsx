@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-import StoryContainer from '../StoryContainer';
-
-const CustomStory = () => {
+const CustomStory = ({ restartLoop }: { restartLoop: () => void }) => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const openDialog = () => {
@@ -16,9 +14,14 @@ const CustomStory = () => {
     setDialogOpen(false);
   };
 
+  const restartStory = () => {
+    console.log('restart');
+    restartLoop();
+  };
+
   return (
     <>
-      <StoryContainer>
+      <div className="py-[20px] px-[40px] bg-[#F0F0F0] w-full h-full text-[#282C33] text-base">
         {dialogOpen ? (
           <div className="flex flex-col h-full justify-between">
             <div>
@@ -110,7 +113,10 @@ const CustomStory = () => {
             <div className="mt-[20px]">
               <div className="flex">
                 <div className="mr-[22px]">
-                  <div className="flex items-center justify-center bg-white rounded-[20px] h-[60px] w-[60px]">
+                  <div
+                    className="cursor-pointer flex items-center justify-center bg-white rounded-[20px] h-[60px] w-[60px]"
+                    onClick={restartStory}
+                  >
                     <Image
                       src="/assets/restart.svg"
                       width={16}
@@ -157,7 +163,7 @@ const CustomStory = () => {
             </div>
           </>
         )}
-      </StoryContainer>
+      </div>
     </>
   );
 };

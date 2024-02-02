@@ -3,18 +3,18 @@ import React, { ReactNode } from 'react';
 export interface StoryProps {
   type: string;
   content: ReactNode;
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
   isTransitioning: boolean;
   duration?: number;
-  // setCurrentStoryIndex: (value: number) => void;
+  restartLoop?: () => void;
 }
 
 const StoryComponent: React.FC<StoryProps> = ({
   type,
   content,
-  width,
-  height,
+  width = '100%',
+  height = '100%',
   isTransitioning,
 }) => {
   if (!type || !content) {
@@ -48,11 +48,7 @@ const StoryComponent: React.FC<StoryProps> = ({
         />
       )}
       {type === 'video' && (
-        <video
-          controls
-          autoPlay
-          style={{ ...style, width: '100%', height: '100%' }}
-        >
+        <video autoPlay style={{ ...style, width: '100%', height: '100%' }}>
           <source src={content as string} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
