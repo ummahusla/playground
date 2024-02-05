@@ -125,8 +125,50 @@ const Stories = ({
     setIsTransitioning,
   ]);
 
+  useEffect(() => {
+    const container = document.getElementById('stories-container');
+
+    if (container) {
+      let touchStartX: number | null = null;
+
+      const handleTouchStart: EventListener = (e) => {
+        console.log(handleTouchStart, e, touchStartX);
+        const touchEvent = e as TouchEvent;
+        touchStartX = touchEvent.touches[0].clientX;
+      };
+
+      const handleTouchEnd: EventListener = (e) => {
+        console.log(handleTouchEnd, e, touchStartX);
+        if (touchStartX === null) {
+          return;
+        }
+
+        const touchEndX = (e as TouchEvent).changedTouches[0].clientX;
+        const deltaX = touchEndX - touchStartX;
+
+        if (deltaX > 50) {
+          // Swipe right
+          goToPrevStory();
+        } else if (deltaX < -50) {
+          // Swipe left
+          goToNextStory();
+        }
+
+        touchStartX = null;
+      };
+
+      container.addEventListener('touchstart', handleTouchStart);
+      container.addEventListener('touchend', handleTouchEnd);
+
+      return () => {
+        container?.removeEventListener('touchstart', handleTouchStart);
+        container?.removeEventListener('touchend', handleTouchEnd);
+      };
+    }
+  }, [goToPrevStory, goToNextStory]);
+
   return (
-    <div className="w-[390px] h-[844px] relative">
+    <div id="stories-container" className="w-[390px] h-[844px] relative">
       <StoryComponent
         type={stories[currentStoryIndex]?.type}
         content={stories[currentStoryIndex]?.content}
