@@ -22,7 +22,7 @@ const StoryComponent: React.FC<StoryProps> = ({
     return null;
   }
 
-  const style = {
+  const style: React.CSSProperties = {
     borderRadius: '8px',
     width,
     height,
