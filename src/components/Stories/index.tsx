@@ -22,55 +22,68 @@ const Stories = ({
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const intervalRef = useRef<ReturnType<typeof setInterval>>();
 
-  const restartLoop = () => {
-    clearInterval(intervalRef.current);
-    setIsTransitioning(true);
+  // const restartLoop = () => {
+  //   clearInterval(intervalRef.current);
+  //   setIsTransitioning(true);
 
-    setTimeout(() => {
-      setCurrentStoryIndex(0);
-      setIsTransitioning(false);
-    }, animationDuration);
-  };
+  //   setTimeout(() => {
+  //     setCurrentStoryIndex(0);
+  //     setIsTransitioning(false);
+  //   }, animationDuration);
+  // };
 
   const stories: Story[] = [
     {
       type: 'image',
-      content: '/assets/1.png',
-    },
-    {
-      type: 'image',
-      content: '/assets/2.png',
-    },
-    {
-      type: 'image',
-      content: '/assets/3.png',
-    },
-    {
-      type: 'image',
-      content: '/assets/4.png',
-    },
-    {
-      type: 'image',
-      content: '/assets/5.png',
-    },
-    {
-      type: 'video',
-      content: '/assets/6.mov',
+      content: '/assets/still_1.jpg',
       duration: 5000,
     },
     {
       type: 'image',
-      content: '/assets/7.png',
-    },
-    {
-      type: 'image',
-      content: '/assets/8.png',
-    },
-    {
-      type: 'component',
-      content: <CustomStory restartLoop={restartLoop} />,
+      content: '/assets/still_2.jpg',
+      duration: 5000,
     },
   ];
+
+  // const stories: Story[] = [
+  //   {
+  //     type: 'image',
+  //     content: '/assets/1.png',
+  //   },
+  //   {
+  //     type: 'image',
+  //     content: '/assets/2.png',
+  //   },
+  //   {
+  //     type: 'image',
+  //     content: '/assets/3.png',
+  //   },
+  //   {
+  //     type: 'image',
+  //     content: '/assets/4.png',
+  //   },
+  //   {
+  //     type: 'image',
+  //     content: '/assets/5.png',
+  //   },
+  //   {
+  //     type: 'video',
+  //     content: '/assets/6.mov',
+  //     duration: 5000,
+  //   },
+  //   {
+  //     type: 'image',
+  //     content: '/assets/7.png',
+  //   },
+  //   {
+  //     type: 'image',
+  //     content: '/assets/8.png',
+  //   },
+  //   {
+  //     type: 'component',
+  //     content: <CustomStory restartLoop={restartLoop} />,
+  //   },
+  // ];
 
   const goToPrevStory = () => {
     clearInterval(intervalRef.current);
@@ -132,13 +145,11 @@ const Stories = ({
       let touchStartX: number | null = null;
 
       const handleTouchStart: EventListener = (e) => {
-        console.log(handleTouchStart, e, touchStartX);
         const touchEvent = e as TouchEvent;
         touchStartX = touchEvent.touches[0].clientX;
       };
 
       const handleTouchEnd: EventListener = (e) => {
-        console.log(handleTouchEnd, e, touchStartX);
         if (touchStartX === null) {
           return;
         }
@@ -173,7 +184,6 @@ const Stories = ({
         type={stories[currentStoryIndex]?.type}
         content={stories[currentStoryIndex]?.content}
         isTransitioning={isTransitioning}
-        restartLoop={restartLoop}
       />
       <button
         onClick={goToPrevStory}
