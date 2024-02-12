@@ -191,6 +191,7 @@ const Stories = ({
         style={{
           pointerEvents: currentStoryIndex === 0 ? 'none' : 'auto',
           opacity: currentStoryIndex === 0 ? 0.5 : 1,
+          zIndex: 999,
         }}
         disabled={isTransitioning}
       />
@@ -201,6 +202,7 @@ const Stories = ({
           pointerEvents:
             currentStoryIndex === stories.length - 1 ? 'none' : 'auto',
           opacity: currentStoryIndex === stories.length - 1 ? 0.5 : 1,
+          zIndex: 999,
         }}
         disabled={isTransitioning}
       />
