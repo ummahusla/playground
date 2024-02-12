@@ -1,4 +1,3 @@
-// imagepreview.tsx
 import React, { useEffect, useRef, useState } from 'react';
 
 interface ImagePreviewProps {
@@ -12,16 +11,37 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ content }) => {
   const [isTextVisible, setIsTextVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    if (imageRef.current) {
+    if (imageRef.current && overlayRef.current) {
+      // Get the width of the image
+      const imageWidth = imageRef.current.offsetWidth;
+      // Get the width of the container
+      const containerWidth = overlayRef.current.offsetWidth;
+      // Calculate the maximum scrollable position
+      const maxScrollPosition = imageWidth - containerWidth;
+
+      // Set an interval to scroll the image horizontally
       const scrollInterval = setInterval(() => {
-        // Scroll the image horizontally by 1 pixels every 25 milliseconds
-        setScrollPosition((prevPosition) => prevPosition + 1);
+        // Scroll the image horizontally by 1 pixel every 25 milliseconds
+        setScrollPosition((prevPosition) => {
+          // Calculate the next position
+          const nextPosition = prevPosition + 1;
+
+          // Check if the next position exceeds the maximum scrollable position
+          if (nextPosition >= maxScrollPosition) {
+            // Stop scrolling
+            clearInterval(scrollInterval);
+            // Set the position to the maximum scrollable position
+            return maxScrollPosition;
+          } else {
+            return nextPosition;
+          }
+        });
       }, 25);
 
       // Clear the interval when the component unmounts
       return () => clearInterval(scrollInterval);
     }
-  }, []);
+  }, [content]);
 
   useEffect(() => {
     if (imageRef.current) {
@@ -35,7 +55,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ content }) => {
       // Show the text after a delay
       const timeout = setTimeout(() => {
         setIsTextVisible(true);
-      }, 200);
+      }, 500);
 
       return () => clearTimeout(timeout);
     }
