@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import StoryComponent from '../StoryComponent';
-import CustomStory from '../CustomStory';
+// import CustomStory from '../CustomStory';
 
 export interface Story {
   type: string;
@@ -36,54 +36,36 @@ const Stories = ({
     {
       type: 'image',
       content: '/assets/still_1.jpg',
-      duration: 5000,
     },
     {
       type: 'image',
       content: '/assets/still_2.jpg',
-      duration: 5000,
     },
+    {
+      type: 'image',
+      content: '/assets/pano_1.jpg',
+    },
+    {
+      type: 'image',
+      content: '/assets/pano_2.jpg',
+    },
+    {
+      type: 'image',
+      content: '/assets/still_3.jpg',
+    },
+    {
+      type: 'image',
+      content: '/assets/still_4.jpg',
+    },
+    {
+      type: 'image',
+      content: '/assets/pano_3.jpg',
+    },
+    // {
+    //   type: 'component',
+    //   content: <CustomStory restartLoop={restartLoop} />,
+    // },
   ];
-
-  // const stories: Story[] = [
-  //   {
-  //     type: 'image',
-  //     content: '/assets/1.png',
-  //   },
-  //   {
-  //     type: 'image',
-  //     content: '/assets/2.png',
-  //   },
-  //   {
-  //     type: 'image',
-  //     content: '/assets/3.png',
-  //   },
-  //   {
-  //     type: 'image',
-  //     content: '/assets/4.png',
-  //   },
-  //   {
-  //     type: 'image',
-  //     content: '/assets/5.png',
-  //   },
-  //   {
-  //     type: 'video',
-  //     content: '/assets/6.mov',
-  //     duration: 5000,
-  //   },
-  //   {
-  //     type: 'image',
-  //     content: '/assets/7.png',
-  //   },
-  //   {
-  //     type: 'image',
-  //     content: '/assets/8.png',
-  //   },
-  //   {
-  //     type: 'component',
-  //     content: <CustomStory restartLoop={restartLoop} />,
-  //   },
-  // ];
 
   const goToPrevStory = () => {
     clearInterval(intervalRef.current);
