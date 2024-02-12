@@ -15,7 +15,7 @@ interface StoriesProps {
 }
 
 const Stories = ({
-  transitionDuration = 3000,
+  transitionDuration = 5000,
   animationDuration = 300,
 }: StoriesProps) => {
   const [currentStoryIndex, setCurrentStoryIndex] = useState<number>(0);
