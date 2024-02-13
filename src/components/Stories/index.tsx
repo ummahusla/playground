@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import StoryComponent from '../StoryComponent';
-import CustomStory from '../CustomStory';
+// import CustomStory from '../CustomStory';
 
 export interface Story {
   type: string;
@@ -15,61 +15,56 @@ interface StoriesProps {
 }
 
 const Stories = ({
-  transitionDuration = 3000,
+  transitionDuration = 5000,
   animationDuration = 300,
 }: StoriesProps) => {
   const [currentStoryIndex, setCurrentStoryIndex] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const intervalRef = useRef<ReturnType<typeof setInterval>>();
 
-  const restartLoop = () => {
-    clearInterval(intervalRef.current);
-    setIsTransitioning(true);
+  // const restartLoop = () => {
+  //   clearInterval(intervalRef.current);
+  //   setIsTransitioning(true);
 
-    setTimeout(() => {
-      setCurrentStoryIndex(0);
-      setIsTransitioning(false);
-    }, animationDuration);
-  };
+  //   setTimeout(() => {
+  //     setCurrentStoryIndex(0);
+  //     setIsTransitioning(false);
+  //   }, animationDuration);
+  // };
 
   const stories: Story[] = [
     {
       type: 'image',
-      content: '/assets/1.png',
+      content: '/assets/still_1.jpg',
     },
     {
       type: 'image',
-      content: '/assets/2.png',
+      content: '/assets/still_2.jpg',
     },
     {
       type: 'image',
-      content: '/assets/3.png',
+      content: '/assets/pano_1.jpg',
     },
     {
       type: 'image',
-      content: '/assets/4.png',
+      content: '/assets/pano_2.jpg',
     },
     {
       type: 'image',
-      content: '/assets/5.png',
-    },
-    {
-      type: 'video',
-      content: '/assets/6.mov',
-      duration: 5000,
+      content: '/assets/still_3.jpg',
     },
     {
       type: 'image',
-      content: '/assets/7.png',
+      content: '/assets/still_4.jpg',
     },
     {
       type: 'image',
-      content: '/assets/8.png',
+      content: '/assets/pano_3.jpg',
     },
-    {
-      type: 'component',
-      content: <CustomStory restartLoop={restartLoop} />,
-    },
+    // {
+    //   type: 'component',
+    //   content: <CustomStory restartLoop={restartLoop} />,
+    // },
   ];
 
   const goToPrevStory = () => {
@@ -132,13 +127,11 @@ const Stories = ({
       let touchStartX: number | null = null;
 
       const handleTouchStart: EventListener = (e) => {
-        console.log(handleTouchStart, e, touchStartX);
         const touchEvent = e as TouchEvent;
         touchStartX = touchEvent.touches[0].clientX;
       };
 
       const handleTouchEnd: EventListener = (e) => {
-        console.log(handleTouchEnd, e, touchStartX);
         if (touchStartX === null) {
           return;
         }
@@ -173,7 +166,6 @@ const Stories = ({
         type={stories[currentStoryIndex]?.type}
         content={stories[currentStoryIndex]?.content}
         isTransitioning={isTransitioning}
-        restartLoop={restartLoop}
       />
       <button
         onClick={goToPrevStory}
@@ -181,6 +173,7 @@ const Stories = ({
         style={{
           pointerEvents: currentStoryIndex === 0 ? 'none' : 'auto',
           opacity: currentStoryIndex === 0 ? 0.5 : 1,
+          zIndex: 999,
         }}
         disabled={isTransitioning}
       />
@@ -191,6 +184,7 @@ const Stories = ({
           pointerEvents:
             currentStoryIndex === stories.length - 1 ? 'none' : 'auto',
           opacity: currentStoryIndex === stories.length - 1 ? 0.5 : 1,
+          zIndex: 999,
         }}
         disabled={isTransitioning}
       />

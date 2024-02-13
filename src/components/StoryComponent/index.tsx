@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
+import ImagePreview from '../ImagePreview';
 
 export interface StoryProps {
   type: string;
@@ -6,48 +7,44 @@ export interface StoryProps {
   width?: string;
   height?: string;
   isTransitioning: boolean;
-  duration?: number;
-  restartLoop?: () => void;
 }
 
-const StoryComponent: React.FC<StoryProps> = ({
+const StoryComponent = ({
   type,
   content,
   width = '100%',
   height = '100%',
   isTransitioning,
-}) => {
+}: StoryProps) => {
   if (!type || !content) {
-    // Handle the case where type or content is undefined
     return null;
   }
 
-  const style: React.CSSProperties = {
+  const style: CSSProperties = {
     borderRadius: '8px',
     width,
     height,
     opacity: isTransitioning ? 0 : 1,
     transition: 'opacity 0.3s ease-in-out',
-    objectFit: type === 'image' || type === 'video' ? 'cover' : 'initial',
-    objectPosition:
-      type === 'image' || type === 'video' ? '50% 50%' : 'initial',
+    // Ensure the overflow is hidden
+    overflow: 'hidden',
+    // Position relative to handle absolute positioning of the ImagePreview
+    position: 'relative',
   };
 
   return (
     <div style={style}>
-      {type === 'image' && (
-        <img
-          src={content as string}
-          alt="Story"
+      {type === 'image' && <ImagePreview content={content as string} />}
+      {type === 'video' && (
+        <video
+          autoPlay
           style={{
             ...style,
-            objectFit: 'cover',
+            width: '100%',
+            height: '100%',
             objectPosition: '50% 50%',
           }}
-        />
-      )}
-      {type === 'video' && (
-        <video autoPlay style={{ ...style, width: '100%', height: '100%' }}>
+        >
           <source src={content as string} type="video/mp4" />
         </video>
       )}
