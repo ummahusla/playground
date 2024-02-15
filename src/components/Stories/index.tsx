@@ -42,11 +42,11 @@ const Stories = ({
       content: '/assets/still_2.jpg',
     },
     {
-      type: 'image',
+      type: 'pano',
       content: '/assets/pano_1.jpg',
     },
     {
-      type: 'image',
+      type: 'pano',
       content: '/assets/pano_2.jpg',
     },
     {
@@ -58,7 +58,7 @@ const Stories = ({
       content: '/assets/still_4.jpg',
     },
     {
-      type: 'image',
+      type: 'pano',
       content: '/assets/pano_3.jpg',
     },
     // {

@@ -1,5 +1,7 @@
 import { CSSProperties, ReactNode } from 'react';
+
 import ImagePreview from '../ImagePreview';
+import PanoPreview from '../PanoPreview';
 
 export interface StoryProps {
   type: string;
@@ -34,6 +36,7 @@ const StoryComponent = ({
 
   return (
     <div style={style}>
+      {type === 'pano' && <PanoPreview content={content as string} />}
       {type === 'image' && <ImagePreview content={content as string} />}
       {type === 'video' && (
         <video
