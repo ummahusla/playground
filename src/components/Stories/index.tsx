@@ -120,34 +120,36 @@ const Stories = ({
     setIsTransitioning,
   ]);
 
+  const touchStartYRef = useRef<number | null>(null); // Add this line
+
   useEffect(() => {
     const container = document.getElementById('stories-container');
 
     if (container) {
-      let touchStartX: number | null = null;
+      let touchStartY: number | null = null; // Change variable name to touchStartY
 
       const handleTouchStart: EventListener = (e) => {
         const touchEvent = e as TouchEvent;
-        touchStartX = touchEvent.touches[0].clientX;
+        touchStartY = touchEvent.touches[0].clientY;
       };
 
       const handleTouchEnd: EventListener = (e) => {
-        if (touchStartX === null) {
+        if (touchStartY === null) {
           return;
         }
 
-        const touchEndX = (e as TouchEvent).changedTouches[0].clientX;
-        const deltaX = touchEndX - touchStartX;
+        const touchEndY = (e as TouchEvent).changedTouches[0].clientY;
+        const deltaY = touchEndY - touchStartY;
 
-        if (deltaX > 50) {
-          // Swipe right
+        if (deltaY > 50) {
+          // Swipe downwards
           goToPrevStory();
-        } else if (deltaX < -50) {
-          // Swipe left
+        } else if (deltaY < -50) {
+          // Swipe upwards
           goToNextStory();
         }
 
-        touchStartX = null;
+        touchStartY = null;
       };
 
       container.addEventListener('touchstart', handleTouchStart);
@@ -160,6 +162,46 @@ const Stories = ({
     }
   }, [goToPrevStory, goToNextStory]);
 
+  // useEffect(() => {
+  //   const container = document.getElementById('stories-container');
+
+  //   if (container) {
+  //     let touchStartX: number | null = null;
+
+  //     const handleTouchStart: EventListener = (e) => {
+  //       const touchEvent = e as TouchEvent;
+  //       touchStartX = touchEvent.touches[0].clientX;
+  //     };
+
+  //     const handleTouchEnd: EventListener = (e) => {
+  //       if (touchStartX === null) {
+  //         return;
+  //       }
+
+  //       const touchEndX = (e as TouchEvent).changedTouches[0].clientX;
+  //       const deltaX = touchEndX - touchStartX;
+
+  //       if (deltaX > 50) {
+  //         // Swipe right
+  //         goToPrevStory();
+  //       } else if (deltaX < -50) {
+  //         // Swipe left
+  //         goToNextStory();
+  //       }
+
+  //       touchStartX = null;
+  //     };
+
+  //     container.addEventListener('touchstart', handleTouchStart);
+  //     container.addEventListener('touchend', handleTouchEnd);
+
+  //     return () => {
+  //       container?.removeEventListener('touchstart', handleTouchStart);
+  //       container?.removeEventListener('touchend', handleTouchEnd);
+  //     };
+  //   }
+  // }, [goToPrevStory, goToNextStory]);
+
   return (
     <div id="stories-container" className="w-[390px] h-[844px] relative">
       <StoryComponent
@@ -167,7 +209,7 @@ const Stories = ({
         content={stories[currentStoryIndex]?.content}
         isTransitioning={isTransitioning}
       />
-      <button
+      {/* <button
         onClick={goToPrevStory}
         className="w-[42px] cursor-pointer absolute bg-transparent h-full top-0 left-0 transition-opacity duration-500 ease-in-out"
         style={{
@@ -187,7 +229,32 @@ const Stories = ({
           zIndex: 999,
         }}
         disabled={isTransitioning}
-      />
+      /> */}
+      <button
+        onClick={goToPrevStory}
+        className="w-[42px] cursor-pointer absolute bg-transparent top-0 left-1/2 transform -translate-x-1/2 transition-opacity duration-500 ease-in-out"
+        style={{
+          pointerEvents: currentStoryIndex === 0 ? 'none' : 'auto',
+          opacity: currentStoryIndex === 0 ? 0.5 : 1,
+          zIndex: 999,
+        }}
+        disabled={isTransitioning}
+      >
+        Previous
+      </button>
+      <button
+        onClick={goToNextStory}
+        className="w-[42px] cursor-pointer absolute bg-transparent bottom-0 left-1/2 transform -translate-x-1/2 transition-opacity duration-500 ease-in-out"
+        style={{
+          pointerEvents:
+            currentStoryIndex === stories.length - 1 ? 'none' : 'auto',
+          opacity: currentStoryIndex === stories.length - 1 ? 0.5 : 1,
+          zIndex: 999,
+        }}
+        disabled={isTransitioning}
+      >
+        Next
+      </button>
     </div>
   );
 };
