@@ -239,17 +239,17 @@ const Stories = ({
       {/* Vertical button controls */}
       <button
         onClick={goToPrevStory}
-        className="w-[42px] cursor-pointer absolute bg-transparent top-0 left-1/2 transform -translate-x-1/2 transition-opacity duration-500 ease-in-out"
+        className="w-[42px] h-full cursor-pointer absolute bg-transparent top-0 left-1/2 transform -translate-x-1/2 transition-opacity duration-500 ease-in-out"
         style={{
           pointerEvents: currentStoryIndex === 0 ? 'none' : 'auto',
           opacity: currentStoryIndex === 0 ? 0.5 : 1,
           zIndex: 999,
         }}
         disabled={isTransitioning}
-      ></button>
+      />
       <button
         onClick={goToNextStory}
-        className="w-[42px] cursor-pointer absolute bg-transparent bottom-0 left-1/2 transform -translate-x-1/2 transition-opacity duration-500 ease-in-out"
+        className="w-[42px] h-full cursor-pointer absolute bg-transparent bottom-0 left-1/2 transform -translate-x-1/2 transition-opacity duration-500 ease-in-out"
         style={{
           pointerEvents:
             currentStoryIndex === stories.length - 1 ? 'none' : 'auto',
@@ -257,7 +257,7 @@ const Stories = ({
           zIndex: 999,
         }}
         disabled={isTransitioning}
-      ></button>
+      />
     </div>
   );
 };
