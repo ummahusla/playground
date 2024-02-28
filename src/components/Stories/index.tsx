@@ -22,6 +22,7 @@ const Stories = ({
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const intervalRef = useRef<ReturnType<typeof setInterval>>();
 
+  // Custom event listener for the custom story (react) component
   // const restartLoop = () => {
   //   clearInterval(intervalRef.current);
   //   setIsTransitioning(true);
@@ -67,6 +68,7 @@ const Stories = ({
     // },
   ];
 
+  // Go to the previous story
   const goToPrevStory = () => {
     clearInterval(intervalRef.current);
     setIsTransitioning(true);
@@ -79,6 +81,7 @@ const Stories = ({
     }, animationDuration);
   };
 
+  // Go to the next story
   const goToNextStory = () => {
     clearInterval(intervalRef.current);
     setIsTransitioning(true);
@@ -120,8 +123,7 @@ const Stories = ({
     setIsTransitioning,
   ]);
 
-  const touchStartYRef = useRef<number | null>(null); // Add this line
-
+  // Vertical swipe controls
   useEffect(() => {
     const container = document.getElementById('stories-container');
 
@@ -162,6 +164,7 @@ const Stories = ({
     }
   }, [goToPrevStory, goToNextStory]);
 
+  // Horizontal swipe controls
   // useEffect(() => {
   //   const container = document.getElementById('stories-container');
 
@@ -209,6 +212,8 @@ const Stories = ({
         content={stories[currentStoryIndex]?.content}
         isTransitioning={isTransitioning}
       />
+
+      {/* Horizontal buttons control */}
       {/* <button
         onClick={goToPrevStory}
         className="w-[42px] cursor-pointer absolute bg-transparent h-full top-0 left-0 transition-opacity duration-500 ease-in-out"
@@ -230,6 +235,8 @@ const Stories = ({
         }}
         disabled={isTransitioning}
       /> */}
+
+      {/* Vertical button controls */}
       <button
         onClick={goToPrevStory}
         className="w-[42px] cursor-pointer absolute bg-transparent top-0 left-1/2 transform -translate-x-1/2 transition-opacity duration-500 ease-in-out"
@@ -239,9 +246,7 @@ const Stories = ({
           zIndex: 999,
         }}
         disabled={isTransitioning}
-      >
-        Previous
-      </button>
+      ></button>
       <button
         onClick={goToNextStory}
         className="w-[42px] cursor-pointer absolute bg-transparent bottom-0 left-1/2 transform -translate-x-1/2 transition-opacity duration-500 ease-in-out"
@@ -252,9 +257,7 @@ const Stories = ({
           zIndex: 999,
         }}
         disabled={isTransitioning}
-      >
-        Next
-      </button>
+      ></button>
     </div>
   );
 };
